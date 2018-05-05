@@ -1,27 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   head.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: azulbukh <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/03/19 20:43:06 by azulbukh          #+#    #+#             */
-/*   Updated: 2018/04/02 13:46:02 by azulbukh         ###   ########.fr       */
+/*   Created: 2018/04/27 16:27:23 by azulbukh          #+#    #+#             */
+/*   Updated: 2018/04/27 18:43:14 by azulbukh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
+#ifndef HEAD_H
+# define HEAD_H
 
-typedef	struct	list
-{
-	int			val;
-	struct ist	*next;
-}				element;
+# include <stdio.h>
+# include <stdlib.h>
 
-int		main(int ac, char **av)
+typedef struct 	s_config
 {
-	element *p;
-	p->val = 5;
-	p->next = NULL;
-	printf("%d\n", p->val);
-}
+	void		*mlx_ptr;
+	void		*img_ptr;
+	void		*win_ptr;
+	int			w;
+	int			h;
+	int			*filed;
+	int			bits_per_pixel;
+	int			size_line;
+	int			endian;
+}				t_config;
+
+#endif
