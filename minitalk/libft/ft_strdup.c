@@ -3,29 +3,46 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ppellegr <ppellegr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: azulbukh <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2013/11/19 15:46:33 by ppellegr          #+#    #+#             */
-/*   Updated: 2013/11/19 15:46:34 by ppellegr         ###   ########.fr       */
+/*   Created: 2018/02/15 16:00:03 by azulbukh          #+#    #+#             */
+/*   Updated: 2018/03/21 20:22:34 by azulbukh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strdup(const char *src)
+static int	ft_strlenq(const char *str)
 {
-	int		i;
-	char	*cpy;
+	int i;
 
 	i = 0;
-	cpy = (char *) malloc(sizeof(*src) * (ft_strlen(src) + 1));
-	if (cpy == NULL || src == NULL)
-		return (NULL);
-	while (src[i] != '\0')
-	{
-		cpy[i] = src[i];
+	while (str[i] != '\0')
 		i++;
+	return (i);
+}
+
+char		*ft_strdup(const char *src)
+{
+	int		i;
+	int		ind;
+	char	*str;
+
+	ind = 0;
+	i = ft_strlenq(src);
+	if (i >= 0)
+	{
+		str = (char *)malloc(i + 1);
+		if (str == NULL)
+			return (0);
+		while (src[ind] != '\0')
+		{
+			str[ind] = src[ind];
+			ind++;
+		}
+		str[ind] = '\0';
+		return (str);
 	}
-	cpy[i] = '\0';
-	return (cpy);
+	else
+		return (0);
 }

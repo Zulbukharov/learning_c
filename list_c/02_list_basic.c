@@ -143,7 +143,10 @@ int		main(int ac, char **av)
 	int i;
 
 	if (ac != 4)
+	{
+		printf("Usage: ./name [:elements:] [:find:] [:remove:]\n");
 		return (0);
+	}
 	val = NULL;
 	list = NULL;
 	n = (size_t)atoi(av[1]);

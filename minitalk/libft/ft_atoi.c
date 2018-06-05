@@ -3,39 +3,40 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ppellegr <ppellegr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: azulbukh <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2013/11/22 14:20:22 by ppellegr          #+#    #+#             */
-/*   Updated: 2013/11/22 14:20:23 by ppellegr         ###   ########.fr       */
+/*   Created: 2018/03/22 04:34:52 by azulbukh          #+#    #+#             */
+/*   Updated: 2018/03/28 19:37:13 by azulbukh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int			ft_atoi(const char *str)
+int		ft_atoi(const char *str)
 {
-	int			result;
-	int			i;
+	long long int n;
+	long long int t;
 
-	i = 1;
-	result = 0;
-	if (str == NULL)
-		return (0);
-	while (*str == ' ' || (*str >= 9 && *str <= 13))
-		++str;
-	if (*str == '+')
-		++str;
-	else if (*str == '-')
+	n = 1;
+	while (((*str >= 9 && *str <= 13) || *str == 32) && *str)
+		str++;
+	if (*str == '-' || *str == '+')
 	{
-		i = i * (-1);
-		++str;
+		if (*str == '-')
+			n = -1;
+		str++;
 	}
-	while (*str != '\0')
+	t = 0;
+	while (*str >= '0' && *str <= '9' && t >= 0)
 	{
-		if (*str >= 48 && *str <= 57)
-			result = (*str++ - 48) + (result * 10);
-		else
-			return (result * i);
+		t = (t * 10) + ((long long int)*str - 48);
+		str++;
 	}
-	return (result * i);
+	if (t < 0)
+	{
+		if (n < 0)
+			return (0);
+		return (-1);
+	}
+	return ((int)t * (int)n);
 }

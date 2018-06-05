@@ -3,75 +3,73 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strsplit.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ppellegr <ppellegr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: azulbukh <azulbukh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2013/11/26 18:34:39 by ppellegr          #+#    #+#             */
-/*   Updated: 2013/11/26 18:34:42 by ppellegr         ###   ########.fr       */
+/*   Created: 2018/03/23 18:51:28 by azulbukh          #+#    #+#             */
+/*   Updated: 2018/04/25 20:18:54 by azulbukh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int		ft_strlen_lnum(char const *s, char c, int k);
-int		ft_strlen_wnum(char const *s, char c);
-
-char	**ft_strsplit(char const *s, char c)
+static int	countwords(char const *s, char c)
 {
-	char	**new_strs;
-	int		i;
-	int		j;
-	int		k;
-	int		wnum;
+	int cwords;
+	int j;
 
-	i = 0;
-	k = 0;
-	wnum = ft_strlen_wnum(s, c);
-	if (s == NULL || (!(new_strs = malloc(sizeof(char *) * (wnum + 1)))))
-		return (NULL);
-	while (wnum--)
+	j = 0;
+	cwords = 0;
+	while (s[j])
 	{
-		j = 0;
-		if ((!(new_strs[i] = malloc(ft_strlen_lnum(s, c, k) + 1))))
-			return (NULL);
-		while (s[k] == c)
-			k++;
-		while (s[k] != c && s[k] != '\0')
-			new_strs[i][j++] = s[k++];
-		new_strs[i++][j] = '\0';
+		while (s[j] == c && s[j])
+			j++;
+		if (s[j] != c && s[j])
+		{
+			cwords++;
+			while (s[j] != c && s[j])
+				j++;
+		}
 	}
-	new_strs[i] = NULL;
-	return (new_strs);
+	return (cwords);
 }
 
-int		ft_strlen_lnum(char const *s, char c, int k)
+static char	**freeallarr(char ***arr)
 {
-	int		i;
+	int i;
 
 	i = 0;
-	while (s[k] != c && s[k] != '\0')
-	{
-		++k;
-		++i;
-	}
-	return (i);
+	while ((*arr)[i])
+		ft_strdel(&(*arr)[i++]);
+	free(**arr);
+	**arr = 0;
+	return (0);
 }
 
-int		ft_strlen_wnum(char const *s, char c)
+char		**ft_strsplit(char const *s, char c)
 {
-	int		k;
+	char	**wordarr;
+	int		start;
 	int		i;
+	int		cword;
 
-	k = 0;
+	if (!s)
+		return (0);
+	if (!(wordarr = (char **)malloc(sizeof(char *) * (countwords(s, c) + 1))))
+		return (0);
 	i = 0;
-	while (s[k] != '\0')
+	cword = 0;
+	while (s[i] != '\0')
 	{
-		while (s[k] == c)
-			k++;
-		if (s[k] == '\0')
-			break ;
-		while (s[k] != c && s[k] != '\0')
-			k++;
-		i++;
+		while (s[i] == c && s[i])
+			i++;
+		if (!s[i])
+			continue;
+		start = i;
+		while (s[i] != c && s[i])
+			i++;
+		if (!(wordarr[cword++] = ft_strsub(s, start, i - start)))
+			return ((char **)freeallarr(&wordarr));
 	}
-	return (i);
+	wordarr[cword] = 0;
+	return (wordarr);
 }

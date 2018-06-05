@@ -1,54 +1,48 @@
-#******************************************************************************#
+# **************************************************************************** #
 #                                                                              #
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ppellegr <ppellegr@student.42.fr>          +#+  +:+       +#+         #
+#    By: azulbukh <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2014/02/07 21:39:49 by ppellegr          #+#    #+#              #
-#    Updated: 2018/05/15 19:34:41 by azulbukh         ###   ########.fr        #
+#    Created: 2018/05/20 16:35:36 by azulbukh          #+#    #+#              #
+#    Updated: 2018/05/20 17:06:15 by azulbukh         ###   ########.fr        #
 #                                                                              #
-#******************************************************************************#
+# **************************************************************************** #
 
-NAME		= serveur
+SERVER = server
+CLIENT = client
+SRC_SERVER = main_server.c maths.c ft_realloc.c
+SRC_CLIENT = main_client.c
+OBJ_SERVER = $(SRC_SERVER:.c=.o)
+OBJ_CLIENT = $(SRC_CLIENT:.c=.o)
+MAKELIB = make -C libft/
+LIBPATH = libft/libft.a
+EFLAGS = -Wall -Wextra -Werror
+.PHONY: all clean fclean re
 
-NAME1		= client
+all: $(SERVER) $(CLIENT)
 
-SRC0		= main_s.c maths.c ft_realloc.c
+$(SERVER): $(LIBPATH) $(OBJ_SERVER)
+	$(MAKELIB)
+	gcc $(EFLAGS) -o $(SERVER) $(OBJ_SERVER) $(LIBPATH)
 
-SRC1		= main_c.c ft_get_next_line.c
+$(CLIENT): $(LIBPATH) $(OBJ_CLIENT)
+	$(MAKELIB)
+	gcc $(EFLAGS) -o $(CLIENT) $(OBJ_CLIENT) $(LIBPATH)
 
-OBJ0		= $(SRC0:.c=.o)
+$(LIBPATH):
+	$(MAKELIB)
 
-OBJ1		= $(SRC1:.c=.o)
-
-CFLAGS		= -Wextra -Wall -Werror -g3
-
-CC			= cc
-
-LIB_LIBFT	= -L libft -lft
-
-INCLUDES	= -I libft/includes
-
-all: $(NAME) $(NAME1)
-
-$(NAME):
-	make -C libft/
-	$(CC) $(CFLAGS) -c $(SRC0) $(INCLUDES)
-	$(CC) $(CFLAGS) -o $(NAME) $(OBJ0) $(LIB_LIBFT)
-
-$(NAME1):
-	$(CC) $(CFLAGS) -c $(SRC1) $(INCLUDES)
-	$(CC) $(CFLAGS) -o $(NAME1) $(OBJ1) $(LIB_LIBFT)
+%.o:%.c
+	gcc $(EFLAGS) -c $< -o $@ -I minitalk.h
 
 clean:
-	rm -f $(OBJ0)
-	rm -f $(OBJ1)
+	rm -f $(OBJ_SERVER) $(OBJ_CLIENT)
+	make -C libft clean
 
 fclean: clean
-	rm -f $(NAME)
-	rm -f $(NAME1)
+	rm -f $(SERVER) $(CLIENT)
+	make -C libft fclean
 
-re: fclean all
-
-.PHONY: all clean fclean re
+re: fclean $(SERVER) $(CLIENT)

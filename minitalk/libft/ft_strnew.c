@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strnew.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ppellegr <ppellegr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: azulbukh <azulbukh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2013/11/26 17:57:53 by ppellegr          #+#    #+#             */
-/*   Updated: 2013/11/26 17:57:55 by ppellegr         ###   ########.fr       */
+/*   Created: 2018/03/22 18:13:40 by azulbukh          #+#    #+#             */
+/*   Updated: 2018/03/29 14:18:31 by azulbukh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,18 @@
 
 char	*ft_strnew(size_t size)
 {
-	char	*allo;
-	char	*tmp;
+	char				*s;
+	unsigned int		d;
 
-	allo = malloc(size);
-	tmp = allo;
-	if (allo == NULL)
+	d = 0;
+	s = (void *)malloc(size + 1);
+	if (!s)
 		return (NULL);
-	while (--size)
-		*allo++ = '\0';
-	return (tmp);
+	while (d < size)
+	{
+		s[d] = '\0';
+		d++;
+	}
+	s[d] = '\0';
+	return (s);
 }

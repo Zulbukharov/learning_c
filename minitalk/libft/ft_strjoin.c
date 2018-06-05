@@ -3,40 +3,47 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ppellegr <ppellegr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: azulbukh <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2013/11/25 19:10:54 by ppellegr          #+#    #+#             */
-/*   Updated: 2013/11/25 19:10:56 by ppellegr         ###   ########.fr       */
+/*   Created: 2018/03/23 17:26:08 by azulbukh          #+#    #+#             */
+/*   Updated: 2018/03/23 20:15:12 by azulbukh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strjoin(char const *s1, char const *s2)
+static void	cmp_it(char const *s1, unsigned int *n, unsigned int cq, char *cop)
 {
-	char		*scat;
-	int			lengcat;
-	char		*tmp;
-
-	if (s1 == NULL || s2 == NULL)
-		return (NULL);
-	lengcat = ft_strlen((char *)s1) + ft_strlen((char *)s2);
-	scat = (char *)malloc(sizeof(char) * (lengcat + 1));
-	if (scat == NULL)
-		return (NULL);
-	tmp = scat;
-	while (*s1 != '\0')
+	while (*s1 && *n < cq)
 	{
-		*scat = *s1;
-		scat++;
+		*cop = *s1;
+		cop++;
+		(*n)++;
 		s1++;
 	}
-	while (*s2 != '\0')
-	{
-		*scat = *s2;
-		scat++;
-		s2++;
-	}
-	*scat = '\0';
-	return (tmp);
+}
+
+char		*ft_strjoin(char const *s1, char const *s2)
+{
+	unsigned int	c;
+	unsigned int	q;
+	unsigned int	n;
+	char			*cop;
+
+	c = 0;
+	q = 0;
+	n = 0;
+	if (!s1 || !s2)
+		return (NULL);
+	while (s1[c])
+		c++;
+	while (s2[q])
+		q++;
+	cop = (char *)malloc(sizeof(char) * (c + q) + 1);
+	if (!cop)
+		return (NULL);
+	cmp_it(s1, &n, (c + q), cop);
+	cmp_it(s2, &n, (c + q), cop + n);
+	*(cop + c + q) = '\0';
+	return (cop);
 }

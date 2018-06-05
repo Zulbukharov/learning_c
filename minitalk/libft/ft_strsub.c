@@ -3,34 +3,61 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strsub.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ppellegr <ppellegr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: azulbukh <azulbukh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2013/11/25 17:47:21 by ppellegr          #+#    #+#             */
-/*   Updated: 2013/11/25 17:47:25 by ppellegr         ###   ########.fr       */
+/*   Created: 2018/03/22 22:32:01 by azulbukh          #+#    #+#             */
+/*   Updated: 2018/03/29 20:30:27 by azulbukh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strsub(char const *s, unsigned int start, size_t len)
+static int		ft_strlenq(const char *s)
 {
-	char		*newstr;
-	size_t		i;
-	size_t		j;
+	int d;
 
-	i = start;
-	j = 0;
-	if (s == NULL)
-		return (NULL);
-	newstr = (char *)malloc(sizeof(char) * (len + 1));
-	if (newstr == NULL)
-		return (0);
-	while (i < (start + len))
+	d = 0;
+	while (*s)
 	{
-		newstr[j] = s[i];
-		i++;
-		j++;
+		d++;
+		s++;
 	}
-	newstr[j] = '\0';
-	return (newstr);
+	return (d);
+}
+
+static void		make_malloc(char const *s, unsigned int start,
+		unsigned int len, char *n)
+{
+	while (*(s + start) && len)
+	{
+		*n = *(s + start);
+		start++;
+		len--;
+		n++;
+	}
+	*n = '\0';
+}
+
+char			*ft_strsub(char const *s, unsigned int start, size_t len)
+{
+	unsigned int	c;
+	char			*n;
+
+	c = 0;
+	if (!s || (int)start > ft_strlenq(s))
+		return (0);
+	while (*(s + start))
+	{
+		start++;
+		c++;
+	}
+	if (len > c)
+		return (NULL);
+	start -= c;
+	n = (char *)malloc(sizeof(char) * (len + 1));
+	if (!n)
+		return (NULL);
+	c = len;
+	make_malloc(s, start, len, n);
+	return (n);
 }

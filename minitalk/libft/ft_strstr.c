@@ -3,34 +3,47 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strstr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ppellegr <ppellegr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: azulbukh <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2013/11/20 17:45:59 by ppellegr          #+#    #+#             */
-/*   Updated: 2013/11/20 17:46:00 by ppellegr         ###   ########.fr       */
+/*   Created: 2018/03/22 04:10:56 by azulbukh          #+#    #+#             */
+/*   Updated: 2018/03/26 21:09:53 by azulbukh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strstr(const char *s1, const char *s2)
+static int		str_in_str(const char *s1, const char *s2)
 {
-	size_t		i;
-	size_t		j;
-
-	j = 0;
-	i = 0;
-	if (s1 == NULL || s2 == NULL)
-		return (NULL);
-	if (s2[j] == '\0')
-		return ((char *)s1);
-	while (s1[i] != '\0')
+	while (*s1 && *s2)
+	{
+		if (*s1 == *s2)
 		{
-			while (s1[i + j] == s2[j] && s2[j] != '\0')
-				j++;
-			if (s2[j] == '\0')
-				return ((char*) s1 + i);
-			i++;
-			j = 0;
+			s1++;
+			s2++;
 		}
+		else
+			return (0);
+	}
+	if (*s2)
+		return (0);
+	return (1);
+}
+
+char			*ft_strstr(const char *s1, const char *s2)
+{
+	int p;
+
+	if (!*s2)
+		return ((char*)s1);
+	while (*s1)
+	{
+		if (*s1 == *s2)
+		{
+			p = str_in_str(s1, s2);
+			if (p == 1)
+				return ((char*)s1);
+		}
+		s1++;
+	}
 	return (NULL);
 }

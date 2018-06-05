@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strmapi.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ppellegr <ppellegr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: azulbukh <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2013/11/26 18:23:46 by ppellegr          #+#    #+#             */
-/*   Updated: 2013/11/26 18:23:49 by ppellegr         ###   ########.fr       */
+/*   Created: 2018/03/22 21:48:27 by azulbukh          #+#    #+#             */
+/*   Updated: 2018/03/22 21:55:39 by azulbukh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,29 @@
 
 char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 {
-	char	*tmp;
-	size_t	i;
+	unsigned int	c;
+	unsigned int	b;
+	char			*s1;
 
-	tmp = NULL;
-	i = 0;
-	if (s == NULL || f == NULL)
+	c = 0;
+	b = 0;
+	if (!s || !f || !*s)
 		return (NULL);
-	tmp = (char *)malloc(ft_strlen(s));
-	if (tmp == NULL)
-		return (NULL);
-	while (s[i] != '\0')
+	while (*s)
 	{
-		tmp[i] = f(i, s[i]);
-		++i;
+		s++;
+		c++;
 	}
-	return ((char *)tmp);
+	s1 = (char *)malloc(sizeof(char) * (c + 1));
+	if (!s1)
+		return (NULL);
+	s -= c;
+	while (b < c)
+	{
+		s1[b] = f(b, *s);
+		b++;
+		s++;
+	}
+	s1[b] = '\0';
+	return (s1);
 }
