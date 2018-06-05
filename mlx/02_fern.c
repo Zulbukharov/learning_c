@@ -6,7 +6,7 @@
 /*   By: azulbukh <azulbukh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/01 09:38:25 by azulbukh          #+#    #+#             */
-/*   Updated: 2018/05/01 09:43:48 by azulbukh         ###   ########.fr       */
+/*   Updated: 2018/06/05 08:52:31 by azulbukh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,7 @@ int   main(void)
   cfg->maxIm = cfg->minIm+(cfg->maxRe-cfg->minRe)*Y/X;
 
 //   draw(cfg, cfg->curq, cfg->curx, cfg->cury);
-barnsleyFern(X, 10000, cfg);
+barnsleyFern(X, 100000, cfg);
   mlx_put_image_to_window(cfg->mlx_ptr, cfg->win_ptr, cfg->img_ptr, 0, 0);
 //   mlx_hook(cfg->win_ptr, 4, 0, mouse_win1, cfg);
   // mlx_hook(cfg->win_ptr, 5, 1L<<6, deal_mouse, cfg);
